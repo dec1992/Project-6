@@ -70,7 +70,7 @@ const User = (props) => {
   useEffect(() => {
     axios
       .get(
-        `https://thingproxy.freeboard.io/fetch/http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=381210&key=${API_KEY}&steamid=${steamId}`
+        `http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=381210&key=${API_KEY}&steamid=${steamId}`
       )
       .then((resp) => {
         updateStats(resp.data);
@@ -82,7 +82,7 @@ const User = (props) => {
   useEffect(() => {
     axios
       .get(
-        `https://thingproxy.freeboard.io/fetch/http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${API_KEY}&steamids=${steamId}`
+        `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${API_KEY}&steamids=${steamId}`
       )
       .then((resp) => {
         updateUserInfo(resp.data);
