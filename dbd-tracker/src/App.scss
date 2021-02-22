@@ -1,17 +1,123 @@
+// Import a Google Font
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto&display=swap');
+
 // Set your brand colors
 $purple: #66bfbf;
 $pink: #fa7c91;
 $brown: #727070;
 $green: #056674;
+$white: #ffffff;
 $beige-light: #e0ece4;
 $beige-lighter: #e0ece4;
+$black: #181818;
 
 // Update Bulma's global variables
-$family-sans-serif: "Nunito", sans-serif;
+$family-primary: "Bebas Neue", sans-serif;
+$family-secondary: "Roboto", sans-serif;
 $primary: $purple;
-$secondary: $brown;
-$link: $green;
+$secondary: $white;
+$link: $white;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
+$dark: $black;
+
+
 
 @import "../node_modules/bulma/bulma.sass";
+
+
+
+html {
+  background-color: $black;
+  height: 100%;
+}
+
+#bloodpointbuttoncontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#bloodpointbutton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: #111111;
+  margin-top: 20px;
+  padding: 10px;
+  max-width: 80%;
+  padding: 10px;
+}
+
+#bloodpointicon {
+  width: 3%;
+  max-height: 100%;
+  margin-right: 10px;
+}
+
+#statbutton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: #111111;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#bpstatline {
+  width: 3px;
+  background-color: red;
+  margin-right: 15px;
+}
+
+#killerstatline {
+  width: 3px;
+  height: 8%;
+  background-color: red;
+  margin-right: 15px;
+  position: absolute;
+  left: 50px;
+}
+
+#survivorstatline {
+  width: 3px;
+  height: 4%;
+  background-color: red;
+  margin-right: 15px;
+  position: absolute;
+  left: 50px;
+}
+
+#stattitle {
+  font-size: small;
+}
+
+#statnumber {
+  font-size: xx-large;
+  margin: 0;
+  line-height: 1;
+}
+
+#ranks {
+  background-color: #020202;
+  border-top: red 2px solid;
+  border-bottom: red 2px solid;
+}
+
+#contact-link:after {
+  display: block;
+  padding: 5px 0px 5px 0px;
+  content: '';
+  border-bottom: solid 2px red; 
+  transform: scaleX(0);  
+  transition: transform 250ms ease-in-out;
+}
+#contact-link:hover:after {
+  transform: scaleX(1);
+}

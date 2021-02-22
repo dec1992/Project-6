@@ -61,9 +61,9 @@ const User = (props) => {
 
   const [userInfo, updateUserInfo] = useState([]);
 
-//  Store current page
+  //  Store current page
 
-const [currentPage, updateCurrentPage] = useState("killer")
+  const [currentPage, updateCurrentPage] = useState("killer");
 
   //  Fetch DBD Stats
 
@@ -89,23 +89,36 @@ const [currentPage, updateCurrentPage] = useState("killer")
       });
   }, []);
 
-//  Handle page change
+  //  Handle page change
 
-function handleKiller() {
-    updateCurrentPage("killer")
-}
+  function handleKiller() {
+    updateCurrentPage("killer");
+  }
 
-function handleSurvivor() {
-    updateCurrentPage("survivor")
-}
+  function handleSurvivor() {
+    updateCurrentPage("survivor");
+  }
 
+  // Return the value of the correct stat
 
-//   console logs
+  function returnObject(name) {
+    const object = stats.playerstats.stats.filter(obj => {
+      return obj.name === name
+    })
+    
+    if (object[0]) {
+      return object[0].value
+    } else {
+      return 0
+    }
 
-  console.log(props);
+     
+  }
+
+  //   console logs
+
+  
   console.log(stats);
-  console.log(userInfo);
-  console.log(currentPage)
 
   // Loading / Invalid Id screen
 
@@ -125,7 +138,7 @@ function handleSurvivor() {
   if (!userInfo.response) {
     return (
       <div className="section">
-        <div className="container">
+        <div className="container is-fluid">
           <div className="title">Loading ...</div>
           <progress className="progress is-large is-success" max="100">
             60%
@@ -136,137 +149,368 @@ function handleSurvivor() {
   }
 
   return (
-    <section className="container is-fluid">
+    <section className="container has-background-dark">
       {/*  User Info */}
-      <article className="media">
-        <figure className="media-left">
-          <p className="image is-64x64">
-            <img src={userInfo.response.players[0].avatar} />
-          </p>
-        </figure>
-        <div className="media-content">
-          <div className="content">
-            <p>
-              <strong>{userInfo.response.players[0].personaname}</strong>
-              <br></br>
-              {userInfo.response.players[0].steamid}
+      <div className="container is-fluid">
+        <article className="media pt-4">
+          <figure className="media-left">
+            <p className="image is-64x64">
+              <img className="is-rounded" src={userInfo.response.players[0].avatar} />
             </p>
+          </figure>
+          <div className="media-content">
+            <div className="content">
+              <p className="has-text-link">
+                <strong className="title has-text-link">
+                  {userInfo.response.players[0].personaname}
+                </strong>
+                <br></br>
+                Steam ID: {userInfo.response.players[0].steamid}
+              </p>
+            </div>
           </div>
+        </article>
+      </div>
+
+
+      {/* Bloodpoints */}
+
+      <div className="container is-fluid has-text-centered" id="bloodpointbuttoncontainer">
+        <div id="bloodpointbutton">
+          <div id="bpstatline"></div>
+          <p className="has-text-link is-6">{returnObject("DBD_BloodwebPoints")} Bloodpoints Earned</p>
         </div>
-      </article>
+      </div>
 
       {/* Killer & Survivor Ranks */}
-
-      <div className="columns is-mobile">
-        <div className="column">
-          <p>Killer Rank</p>
-          <figure className="image is-64x64">
-            {stats.playerstats.stats[0].value < 3 && <img src={k20} />}
-            {stats.playerstats.stats[0].value > 2 &&
-              stats.playerstats.stats[0].value < 6 && <img src={k19} />}
-            {stats.playerstats.stats[0].value > 5 &&
-              stats.playerstats.stats[0].value < 10 && <img src={k18} />}
-            {stats.playerstats.stats[0].value > 9 &&
-              stats.playerstats.stats[0].value < 14 && <img src={k17} />}
-            {stats.playerstats.stats[0].value > 13 &&
-              stats.playerstats.stats[0].value < 18 && <img src={k16} />}
-            {stats.playerstats.stats[0].value > 17 &&
-              stats.playerstats.stats[0].value < 22 && <img src={k15} />}
-            {stats.playerstats.stats[0].value > 21 &&
-              stats.playerstats.stats[0].value < 26 && <img src={k14} />}
-            {stats.playerstats.stats[0].value > 25 &&
-              stats.playerstats.stats[0].value < 30 && <img src={k13} />}
-            {stats.playerstats.stats[0].value > 29 &&
-              stats.playerstats.stats[0].value < 35 && <img src={k12} />}
-            {stats.playerstats.stats[0].value > 34 &&
-              stats.playerstats.stats[0].value < 40 && <img src={k11} />}
-            {stats.playerstats.stats[0].value > 39 &&
-              stats.playerstats.stats[0].value < 45 && <img src={k10} />}
-            {stats.playerstats.stats[0].value > 44 &&
-              stats.playerstats.stats[0].value < 50 && <img src={k9} />}
-            {stats.playerstats.stats[0].value > 49 &&
-              stats.playerstats.stats[0].value < 55 && <img src={k8} />}
-            {stats.playerstats.stats[0].value > 54 &&
-              stats.playerstats.stats[0].value < 60 && <img src={k7} />}
-            {stats.playerstats.stats[0].value > 59 &&
-              stats.playerstats.stats[0].value < 65 && <img src={k6} />}
-            {stats.playerstats.stats[0].value > 64 &&
-              stats.playerstats.stats[0].value < 70 && <img src={k5} />}
-            {stats.playerstats.stats[0].value > 69 &&
-              stats.playerstats.stats[0].value < 75 && <img src={k4} />}
-            {stats.playerstats.stats[0].value > 74 &&
-              stats.playerstats.stats[0].value < 80 && <img src={k3} />}
-            {stats.playerstats.stats[0].value > 79 &&
-              stats.playerstats.stats[0].value < 85 && <img src={k2} />}
-            {stats.playerstats.stats[0].value > 84 && <img src={k1} />}
-          </figure>
-        </div>
-        <div className="column">
-          <p>Survivor Rank</p>
-          <figure className="image is-64x64">
-            {stats.playerstats.stats[1].value < 3 && <img src={k20} />}
-            {stats.playerstats.stats[1].value > 2 &&
-              stats.playerstats.stats[1].value < 6 && <img src={s19} />}
-            {stats.playerstats.stats[1].value > 5 &&
-              stats.playerstats.stats[1].value < 10 && <img src={s18} />}
-            {stats.playerstats.stats[1].value > 9 &&
-              stats.playerstats.stats[1].value < 14 && <img src={s17} />}
-            {stats.playerstats.stats[1].value > 13 &&
-              stats.playerstats.stats[1].value < 18 && <img src={s16} />}
-            {stats.playerstats.stats[1].value > 17 &&
-              stats.playerstats.stats[1].value < 22 && <img src={s15} />}
-            {stats.playerstats.stats[1].value > 21 &&
-              stats.playerstats.stats[1].value < 26 && <img src={s14} />}
-            {stats.playerstats.stats[1].value > 25 &&
-              stats.playerstats.stats[1].value < 30 && <img src={s13} />}
-            {stats.playerstats.stats[1].value > 29 &&
-              stats.playerstats.stats[1].value < 35 && <img src={s12} />}
-            {stats.playerstats.stats[1].value > 34 &&
-              stats.playerstats.stats[1].value < 40 && <img src={s11} />}
-            {stats.playerstats.stats[1].value > 39 &&
-              stats.playerstats.stats[1].value < 45 && <img src={s10} />}
-            {stats.playerstats.stats[1].value > 44 &&
-              stats.playerstats.stats[1].value < 50 && <img src={s9} />}
-            {stats.playerstats.stats[1].value > 49 &&
-              stats.playerstats.stats[1].value < 55 && <img src={s8} />}
-            {stats.playerstats.stats[1].value > 54 &&
-              stats.playerstats.stats[1].value < 60 && <img src={s7} />}
-            {stats.playerstats.stats[1].value > 59 &&
-              stats.playerstats.stats[1].value < 65 && <img src={s6} />}
-            {stats.playerstats.stats[1].value > 64 &&
-              stats.playerstats.stats[1].value < 70 && <img src={s5} />}
-            {stats.playerstats.stats[1].value > 69 &&
-              stats.playerstats.stats[1].value < 75 && <img src={s4} />}
-            {stats.playerstats.stats[1].value > 74 &&
-              stats.playerstats.stats[1].value < 80 && <img src={s3} />}
-            {stats.playerstats.stats[1].value > 79 &&
-              stats.playerstats.stats[1].value < 85 && <img src={s2} />}
-            {stats.playerstats.stats[1].value > 84 && <img src={s1} />}
-          </figure>
+      <div className="container">
+        <div className="columns is-mobile mt-4 pb-6" id="ranks">
+          <div className="column has-text-centered mt-2">
+            <p className="has-text-link has-text-center">Killer Rank</p>
+            <figure className="image is-64x64 is-inline-block pt-3">
+              {stats.playerstats.stats[0].value < 3 && <img src={k20} />}
+              {stats.playerstats.stats[0].value > 2 &&
+                stats.playerstats.stats[0].value < 6 && <img src={k19} />}
+              {stats.playerstats.stats[0].value > 5 &&
+                stats.playerstats.stats[0].value < 10 && <img src={k18} />}
+              {stats.playerstats.stats[0].value > 9 &&
+                stats.playerstats.stats[0].value < 14 && <img src={k17} />}
+              {stats.playerstats.stats[0].value > 13 &&
+                stats.playerstats.stats[0].value < 18 && <img src={k16} />}
+              {stats.playerstats.stats[0].value > 17 &&
+                stats.playerstats.stats[0].value < 22 && <img src={k15} />}
+              {stats.playerstats.stats[0].value > 21 &&
+                stats.playerstats.stats[0].value < 26 && <img src={k14} />}
+              {stats.playerstats.stats[0].value > 25 &&
+                stats.playerstats.stats[0].value < 30 && <img src={k13} />}
+              {stats.playerstats.stats[0].value > 29 &&
+                stats.playerstats.stats[0].value < 35 && <img src={k12} />}
+              {stats.playerstats.stats[0].value > 34 &&
+                stats.playerstats.stats[0].value < 40 && <img src={k11} />}
+              {stats.playerstats.stats[0].value > 39 &&
+                stats.playerstats.stats[0].value < 45 && <img src={k10} />}
+              {stats.playerstats.stats[0].value > 44 &&
+                stats.playerstats.stats[0].value < 50 && <img src={k9} />}
+              {stats.playerstats.stats[0].value > 49 &&
+                stats.playerstats.stats[0].value < 55 && <img src={k8} />}
+              {stats.playerstats.stats[0].value > 54 &&
+                stats.playerstats.stats[0].value < 60 && <img src={k7} />}
+              {stats.playerstats.stats[0].value > 59 &&
+                stats.playerstats.stats[0].value < 65 && <img src={k6} />}
+              {stats.playerstats.stats[0].value > 64 &&
+                stats.playerstats.stats[0].value < 70 && <img src={k5} />}
+              {stats.playerstats.stats[0].value > 69 &&
+                stats.playerstats.stats[0].value < 75 && <img src={k4} />}
+              {stats.playerstats.stats[0].value > 74 &&
+                stats.playerstats.stats[0].value < 80 && <img src={k3} />}
+              {stats.playerstats.stats[0].value > 79 &&
+                stats.playerstats.stats[0].value < 85 && <img src={k2} />}
+              {stats.playerstats.stats[0].value > 84 && <img src={k1} />}
+            </figure>
+          </div>
+          <div className="column has-text-centered mt-2">
+            <p className="has-text-link has-text-centered">Survivor Rank</p>
+            <figure className="image is-64x64 is-inline-block pt-3">
+              {stats.playerstats.stats[1].value < 3 && <img src={k20} />}
+              {stats.playerstats.stats[1].value > 2 &&
+                stats.playerstats.stats[1].value < 6 && <img src={s19} />}
+              {stats.playerstats.stats[1].value > 5 &&
+                stats.playerstats.stats[1].value < 10 && <img src={s18} />}
+              {stats.playerstats.stats[1].value > 9 &&
+                stats.playerstats.stats[1].value < 14 && <img src={s17} />}
+              {stats.playerstats.stats[1].value > 13 &&
+                stats.playerstats.stats[1].value < 18 && <img src={s16} />}
+              {stats.playerstats.stats[1].value > 17 &&
+                stats.playerstats.stats[1].value < 22 && <img src={s15} />}
+              {stats.playerstats.stats[1].value > 21 &&
+                stats.playerstats.stats[1].value < 26 && <img src={s14} />}
+              {stats.playerstats.stats[1].value > 25 &&
+                stats.playerstats.stats[1].value < 30 && <img src={s13} />}
+              {stats.playerstats.stats[1].value > 29 &&
+                stats.playerstats.stats[1].value < 35 && <img src={s12} />}
+              {stats.playerstats.stats[1].value > 34 &&
+                stats.playerstats.stats[1].value < 40 && <img src={s11} />}
+              {stats.playerstats.stats[1].value > 39 &&
+                stats.playerstats.stats[1].value < 45 && <img src={s10} />}
+              {stats.playerstats.stats[1].value > 44 &&
+                stats.playerstats.stats[1].value < 50 && <img src={s9} />}
+              {stats.playerstats.stats[1].value > 49 &&
+                stats.playerstats.stats[1].value < 55 && <img src={s8} />}
+              {stats.playerstats.stats[1].value > 54 &&
+                stats.playerstats.stats[1].value < 60 && <img src={s7} />}
+              {stats.playerstats.stats[1].value > 59 &&
+                stats.playerstats.stats[1].value < 65 && <img src={s6} />}
+              {stats.playerstats.stats[1].value > 64 &&
+                stats.playerstats.stats[1].value < 70 && <img src={s5} />}
+              {stats.playerstats.stats[1].value > 69 &&
+                stats.playerstats.stats[1].value < 75 && <img src={s4} />}
+              {stats.playerstats.stats[1].value > 74 &&
+                stats.playerstats.stats[1].value < 80 && <img src={s3} />}
+              {stats.playerstats.stats[1].value > 79 &&
+                stats.playerstats.stats[1].value < 85 && <img src={s2} />}
+              {stats.playerstats.stats[1].value > 84 && <img src={s1} />}
+            </figure>
+          </div>
         </div>
       </div>
-      
+
       {/*  Page Selector */}
-      
-      <div className="columns is-mobile">
-          <div className="column">
-                <p onClick={handleKiller}>Killer</p>
-          </div>
-          <div className="column">
-                <p onClick={handleSurvivor}>Survivor</p>
-          </div>
-      </div>
-    
-    {/* Pages */}
-                {/* Killer Page */}
 
-    {currentPage === "killer" && <div>
-        <p>We're on the killer page</p>
-        </div>}
-                {/*  Survivor Page */}
-        {currentPage === "survivor" && <div>
-        <p>We're on the survivor page</p>
-        </div>}
+      <div className="columns is-mobile mt-3">
+        <div className="column has-text-centered pb-0" id="contact-link">
+          <p className="has-text-link" onClick={handleKiller}>
+            Killer Stats
+          </p>
+        </div>
+        <div className="column has-text-centered" id="contact-link">
+          <p className="has-text-link" onClick={handleSurvivor}>
+            Survivor Stats
+          </p>
+        </div>
+      </div>
+
+      {/* Pages */}
+      {/* Killer Page */}
+
+      {currentPage === "killer" && (
+        <div className="container is-fluid has-text-centered" id="bloodpointbuttoncontainer">
+
+        <div id="statbutton">
+          <div id="killerstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Games Played</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_SlasherFullLoadout")}
+          </p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="killerstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link is-7" id="stattitle">Survivors Sacrificed</p>
+            <p className="has-text-link is-3" id="statnumber">{returnObject("DBD_SacrificedCampers")}</p>
+          </div> 
+        </div>
+        
+        <div id="statbutton">
+          <div id="killerstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Survivors Killed</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_KilledCampers")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="killerstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Perfect Games</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_SlasherMaxScoreByCategory")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="killerstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Survivors Hooked in Basement</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_DLC6_Slasher_Stat2")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="killerstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Wins With Generators Remaining</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_Chapter11_Slasher_Stat1")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="killerstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Survivors Grabbed While Repairing</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_Chapter12_Slasher_Stat1")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="killerstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Hatches Closed</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_Chapter13_Slasher_Stat1")}</p>
+          </div> 
+        </div>
+
+
+
+      </div>
+
+      
+      )}
+      {/*  Survivor Page */}
+      {currentPage === "survivor" && (
+        <div className="container is-fluid has-text-centered" id="bloodpointbuttoncontainer">
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Games Played</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_CamperFullLoadout")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Perfect Games</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_CamperMaxScoreByCategory")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Escapes</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_Escape")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Crawling Escapes</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_EscapeKO")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Hatch Escapes</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_EscapeThroughHatch")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Exit Gates Opened</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_DLC7_Camper_Stat2")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Generators Repaired</p>
+            <p className="has-text-link" id="statnumber">{Math.round(returnObject("DBD_GeneratorPct_float"))}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Survivors Healed</p>
+            <p className="has-text-link" id="statnumber">{Math.round(returnObject("DBD_HealPct_float"))}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Survivors Unhooked</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_UnhookOrHeal") - returnObject("DBD_Chapter15_Camper_Stat1")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Survivors Picked Up</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_Chapter15_Camper_Stat1")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Successful Skillchecks</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_SkillCheckSuccess")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Hex Totems Cleansed</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_DLC3_Camper_Stat1")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Vaults In Chase</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_Camper8_Stat2")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Hits Evaded by Vaulting</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_DLC9_Camper_Stat1")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Chests Searched</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_DLC7_Camper_Stat1")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Escaped With Loot</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_CamperNewItem")}</p>
+          </div> 
+        </div>
+
+        <div id="statbutton">
+          <div id="survivorstatline"></div>
+          <div id="statbox">
+            <p className="has-text-link" id="stattitle">Escaped With Teammate's Item</p>
+            <p className="has-text-link" id="statnumber">{returnObject("DBD_CamperEscapeWithItemFrom")}</p>
+          </div> 
+        </div>
+
+
+
+        </div>
+      )}
+
     </section>
   );
 };
