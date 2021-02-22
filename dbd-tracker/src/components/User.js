@@ -125,12 +125,16 @@ const User = (props) => {
   if (!stats.playerstats) {
     return (
       <div className="section">
-        <div className="container">
+        <div className="container is-fluid" id="loading">
           <div className="title">Loading ...</div>
           <progress className="progress is-large is-success" max="100">
             60%
           </progress>
         </div>
+        <p className="has-text-link has-text-centered pt-6">This Should only take a few seconds, if it takes longer: <br></br> 
+        1. Check you have entered the correct Steam ID, help <a href="https://www.google.com/search?q=find+your+steam+id&rlz=1C1CHBF_en-GBGB923GB923&oq=find+your+steam+id&aqs=chrome..69i57j0i22i30l3j0i10i22i30j0i22i30l2j69i60.4190j1j7&sourceid=chrome&ie=UTF-8" target="_blank" rel="noopener noreferrer" id="link">Here</a> <br></br>
+        2. Make Sure You Have Set Your Steam Profile To Public, help <a href="https://www.google.com/search?q=how+to+make+steam+profile+public&rlz=1C1CHBF_en-GBGB923GB923&oq=how+to+make+steam+profile+&aqs=chrome.0.0l4j69i57j0l3.5402j1j4&sourceid=chrome&ie=UTF-8" target="_blank" rel="noopener noreferrer" id="link">Here</a>
+        </p>
       </div>
     );
   }
